@@ -21,8 +21,8 @@ for string in finalstring[start:fin]:
 		coord = str(coord).split(" ")
 		for trip in coord:
 			lon, lat, _ = trip.split(",")
-			if float(lon) > 130:
-				lon = float(lon) - 360
+			if float(lon) < -125 or float(lat) < 25 or float(lon) > 10:
+				continue
 			coordinate = (float(lat), float(lon))
 			polygon.append(coordinate)
 	try:
