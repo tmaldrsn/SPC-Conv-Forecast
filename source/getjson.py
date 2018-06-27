@@ -37,25 +37,27 @@ for event, probabilities in probs.items():
 		coord_dict[event][probability] = []
 
 for event, coord in coords.items():
-	for coordinate in coord:
-		if coordinate[:4] == "    ":
-			prob = coord[coord.index(coordinate)-1][:4]
-			coordinate = prob + coordinate[4:]
-		if coordinate[:4] in probs[event]:
-			for term in coordinate[7:].split(' '):
-				coord_dict[event][coordinate[:4]].append(conversion.convert(term))
-
+	for coordinate_index in range(len(coord)):
+		if coord[coordinate_index][:4] == "    ":
+			prob = coord[coordinate_index-1][:4]
+			coord[coordinate_index] = prob + coord[coordinate_index][4:]
+		print(coord[coordinate_index])
+		if coord[coordinate_index][:4] in probs[event]:
+			for term in coord[coordinate_index][7:].split(' '):
+				coord_dict[event][coord[coordinate_index][:4]].append(conversion.convert(term))
 
 file = json.dumps(coord_dict, indent=4)
 
 print(file)
 
-"""
-os.chdir('./data/')
+try:
+	os.chdir('../data/')
+except FileNotFoundError:
+	os.mkdir('../data/')
+	os.chdir('../data/')
 
 f = open(url[-27:-4] + ".json", 'w')
 f.write(file)
 print("Data file written")
-	
+
 os.chdir('..')
-"""

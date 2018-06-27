@@ -2,10 +2,13 @@ import os
 import glob
 import json
 import numpy as np
-
+from matplotlib import pyplot as plt
+from shapely.geometry.polygon import LinearRing
+from shapely.geometry import LineString
+import bordercoords
 
 def find_recent_json():
-	os.chdir('../data')
+	os.chdir('./data')
 	file_names = glob.glob('../data/*')
 	return max(file_names, key=os.path.getctime)
 
@@ -19,8 +22,8 @@ def in_or_out(polygon, coordinates):
 
 	# determine number of horizontal intersections for coordinates
 
-	current_lat = float(coordinates[0])
-	current_lon = float(coordinates[1])
+	current_lat = coordinates[0]
+	current_lon = coordinates[1]
 
 	count = 0
 	for i in range(len(lats)-1):
@@ -42,7 +45,17 @@ json_path = find_recent_json()
 with open(json_path) as f:
 	data = json.load(f)
 
+print(data['categorical']['MRGL'])
+l = []
+for coord in data['categorical']['MRGL']:
+	l.append(tuple(coord))
+
+line = LineString(l)
+plt.plot(line.xy[1], line.xy[0])
+
+bordercoords.main()
+
 
 for event in data:
 	for prob in data[event]:
-		print(event, prob, in_or_out(data[event][prob], ('38.84', '-97.61')))
+		print(event, prob, in_or_out(data[event][prob], (38.84, -97.61)))
