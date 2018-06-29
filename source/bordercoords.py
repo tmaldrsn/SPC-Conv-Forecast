@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def main():
 
-	kml_file = '../source/gz_2010_us_outline_20m.kml'
+	kml_file = './data/gz_2010_us_outline_20m.kml'
 
 	f = open(kml_file, 'r')
 	s = BeautifulSoup(f, 'xml')
@@ -25,8 +25,7 @@ def main():
 				continue
 			for trip in coord:
 				lon, lat, _ = trip.split(",")
-	#			if float(lon) < -125 or float(lat) < 25 or float(lon) > 10:
-	#				continue
+
 				coordinate = (float(lat), float(lon))
 				polygon.append(coordinate)
 		try:
@@ -39,6 +38,3 @@ def main():
 			plt.plot(polygons[i].xy[1], polygons[i].xy[0], color='b')
 		except:
 			pass
-
-
-	plt.show()

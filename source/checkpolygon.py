@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from shapely.geometry.polygon import LinearRing
 from shapely.geometry import LineString
 import bordercoords
+import get_coords as new
 
 def find_recent_json():
 	os.chdir('./data')
@@ -38,24 +39,3 @@ def in_or_out(polygon, coordinates):
 		return False
 	else:
 		return True
-
-# Load most recent json file #
-
-json_path = find_recent_json()
-with open(json_path) as f:
-	data = json.load(f)
-
-print(data['categorical']['MRGL'])
-l = []
-for coord in data['categorical']['MRGL']:
-	l.append(tuple(coord))
-
-line = LineString(l)
-plt.plot(line.xy[1], line.xy[0])
-
-bordercoords.main()
-
-
-for event in data:
-	for prob in data[event]:
-		print(event, prob, in_or_out(data[event][prob], (38.84, -97.61)))
