@@ -7,11 +7,12 @@ import geturl
 import string
 import numpy as np
 
-url = geturl.geturl(2)[1]
+day = geturl.geturl(1)[0]
+url = geturl.geturl(1)[1]
 text = urllib.request.urlopen(url).read().decode('utf-8')
 text_array = list(filter(lambda a: a != '', text.split('\n')))
 
-if url[0] == 1:
+if day == 1:
     torn = text_array.index('... TORNADO ...')
     hail = text_array.index('... HAIL ...')
     wind = text_array.index('... WIND ...')
@@ -93,5 +94,3 @@ def get_coordinates(event, probability):
 
     out = [[conversion.convert(coord) for coord in coords] for coords in out]
     return out
-
-get_coordinates("severe", "0.05")

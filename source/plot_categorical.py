@@ -3,6 +3,7 @@ import get_coords as new
 import conversion
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 def event_coords(prob):
 	try:
@@ -12,21 +13,15 @@ def event_coords(prob):
 		return False
 
 def main():
-	categorical_TSTM = event_coords('TSTM')
-	categorical_MRGL = event_coords('MRGL')
-	categorical_SLGT = event_coords('SLGT')
-	categorical_ENH  = event_coords('ENH ')
-	categorical_MOD  = event_coords('MOD ')
-	categorical_HIGH = event_coords('HIGH')
-
-	list = [categorical_TSTM, categorical_MRGL, categorical_SLGT, categorical_ENH, categorical_MOD, categorical_HIGH]
+	list = ['TSTM', 'MRGL', 'SLGT', 'ENH ', 'MOD ', 'HIGH']
 	colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
+	custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
 	for prob, color in zip(list, colors):
-		if prob:
-			for shape in prob:
+		if event_coords(prob):
+			for shape in event_coords(prob):
 				line = LineString(shape)
 				plt.plot(line.xy[1], line.xy[0], color=color)
-
+		plt.legend(custom_lines, list, loc=4)
 
 bordercoords.main()
 main()
