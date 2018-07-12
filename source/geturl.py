@@ -18,7 +18,7 @@ def geturl():
 		hour = str("0600")
 	elif 6 <= hour < 13:
 		hour = str("1200")
-	elif 13 <= hour < 16 and minute < 30:
+	elif 13 <= hour or (hour < 16 and minute < 30):
 		hour = str("1300")
 	elif (minute > 30 and 16 <= hour) or hour < 20:
 		hour = str("1630")

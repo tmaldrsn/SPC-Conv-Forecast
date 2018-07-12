@@ -4,6 +4,8 @@ import urllib.request
 import requests
 import conversion
 import geturl
+import string
+import numpy as np
 
 print("PACKAGES IMPORTED")
 
@@ -20,7 +22,7 @@ wind = text_array.index('... WIND ...')
 cate = text_array.index('... CATEGORICAL ...')
 end = text_array[cate:].index("&&")
 
-coords = {    "tornado":        text_array[torn+1:hail-1],
+coords = {  "tornado":        text_array[torn+1:hail-1],
             "hail":            text_array[hail+1:wind-1],
             "wind":            text_array[wind+1:cate-2],
             "categorical":    text_array[cate+1:cate+end]}
@@ -31,8 +33,21 @@ probs = {    "tornado":        ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", 
              "categorical":     ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
 
 
+def remove_cont(coords_list, substr='99999999 '):
+    new_list = []
+    for coord in coords_list:
+        index = 0
+        length = len(substr)
+        while str.find(coord, substr) != -1:
+            index = str.find(coord, substr)
+            new_list.append(coord[0:index])
+            coord = 'TSTM   ' + coord[index+length:]
+        new_list.append(coord[:-1])
+    return new_list
+
 def get_coordinates(event, probability):
-    un_coords = coords[event]
+    un_coords = remove_cont(coords[event])
+
     d = []
     for string in un_coords:
         new_string = list(filter(lambda a: a != '', string.split(' ')))
@@ -40,14 +55,16 @@ def get_coordinates(event, probability):
 
     indices = []
     for _ in range(len(d)):
-        if d[_][0] in probs[event]:
+        if len(d[_]) != 0 and d[_][0] in probs[event]:
             indices.append(_)
+        else:
+            continue
 
-    low = min(i for i in range(len(d)) if d[i][0] == probability)
-    high = max(i for i in range(len(d)) if d[i][0] == probability)
+    low = min(i for i in range(len(d)) if len(d[i]) != 0 and d[i][0] == probability)
+    high = max(i for i in range(len(d)) if len(d[i]) != 0 and d[i][0] == probability)
 
     try:
-        while str(d[high+1][0]) not in probs[event]:
+        while len(d[high+1]) != 0 and str(d[high+1][0]) not in probs[event]:
             high += 1
     except:
         pass
@@ -57,9 +74,7 @@ def get_coordinates(event, probability):
 
     out = []
     while i <= high:
-        if d[i][0] == probability:
-            if "99999999" in d[i]:
-                pass
+        if len(d[i]) != 0 and d[i][0] == probability:
             j += 1
             out.append([])
             new_out = out[j]
@@ -67,7 +82,6 @@ def get_coordinates(event, probability):
         else:
             new_out += d[i][:]
         i += 1
-
 
     out = [[conversion.convert(coord) for coord in coords] for coords in out]
     return out
