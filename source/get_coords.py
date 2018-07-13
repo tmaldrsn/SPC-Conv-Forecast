@@ -7,8 +7,8 @@ import geturl
 import string
 import numpy as np
 
-day = geturl.geturl(1)[0]
-url = geturl.geturl(1)[1]
+day = geturl.geturl(48)[0]
+url = geturl.geturl(48)[1]
 text = urllib.request.urlopen(url).read().decode('utf-8')
 text_array = list(filter(lambda a: a != '', text.split('\n')))
 
@@ -30,7 +30,7 @@ if day == 1:
                "categorical":     ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
 
 
-else:
+elif day == 2 or day == 3:
     severe = text_array.index('... ANY SEVERE ...')
     cate = text_array.index('... CATEGORICAL ...')
     end = text_array[cate:].index("&&")
@@ -41,6 +41,14 @@ else:
     probs =  {  "severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
 
+elif day == 48:
+	severe = text_array.index('... ANY SEVERE ...')
+	end = text_array[severe:].index("&&")
+
+	coords = { "severe": text_array[severe+1:severe+end]}
+	probs =  { "severe": ['D4', 'D5', 'D6', 'D7', 'D8']}
+
+print(coords)
 
 def remove_cont(coords_list, substr='99999999 '):
     new_list = []

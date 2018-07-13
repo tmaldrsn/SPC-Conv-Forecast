@@ -7,16 +7,14 @@ from matplotlib.lines import Line2D
 
 def event_coords(prob):
 	try:
-		categorical = new.get_coordinates(event='categorical', probability=prob)
-		return categorical
+		severe = new.get_coordinates(event='severe', probability=prob)
+		return severe
 	except ValueError:
 		return False
 
 def main():
-	list = ['TSTM', 'MRGL', 'SLGT', 'ENH ', 'MOD ', 'HIGH']
-	colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
-#	list = ['TSTM', 'SLGT', 'MDT ', 'HIGH']
-#	colors = ['lime', 'yellow', 'red', 'purple']
+	list = ['D4', 'D5', 'D6', 'D7', 'D8']
+	colors = ['red', 'purple', 'green', 'blue', 'brown']
 	custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
 	for prob, color in zip(list, colors):
 		if event_coords(prob):
