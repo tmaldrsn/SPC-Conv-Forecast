@@ -3,6 +3,7 @@ import get_coords as new
 import conversion
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
 def event_coords(prob):
 	try:
@@ -12,21 +13,15 @@ def event_coords(prob):
 		return False
 
 def main():
-	wind_005 = event_coords('0.05')
-	wind_015 = event_coords('0.15')
-	wind_030 = event_coords('0.30')
-	wind_045 = event_coords('0.45')
-	wind_060 = event_coords('0.60')
-	wind_SIG = event_coords('SIGN')
-
-	list = [wind_005, wind_015, wind_030, wind_045, wind_060, wind_SIG]
+	list = ['0.05', '0.15', '0.30', '0.45', '0.60', 'SIGN']
 	colors = ['brown', 'yellow', 'red', 'pink', 'purple', 'black']
+	custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
 	for prob, color in zip(list, colors):
-		if prob:
-			for shape in prob:
+		if event_coords(prob):
+			for shape in event_coords(prob):
 				line = LineString(shape)
 				plt.plot(line.xy[1], line.xy[0], color=color)
-
+		plt.legend(custom_lines, list, loc=4)
 
 bordercoords.main()
 main()

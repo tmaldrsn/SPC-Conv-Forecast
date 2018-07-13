@@ -4,11 +4,10 @@ import conversion
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-
 def event_coords(prob):
 	try:
-		hail = new.get_coordinates(event='hail', probability=prob)
-		return hail
+		categorical = new.get_coordinates(event='severe', probability=prob)
+		return categorical
 	except ValueError:
 		return False
 
@@ -21,7 +20,7 @@ def main():
 			for shape in event_coords(prob):
 				line = LineString(shape)
 				plt.plot(line.xy[1], line.xy[0], color=color)
-			plt.legend(custom_lines, list, loc=4)
+		plt.legend(custom_lines, list, loc=4)
 
 bordercoords.main()
 main()
