@@ -7,31 +7,48 @@ import geturl
 import string
 import numpy as np
 
-print("PACKAGES IMPORTED")
-
-url = geturl.geturl()
-
-print("URL RETREIVED")
-
+day = geturl.geturl(48)[0]
+url = geturl.geturl(48)[1]
 text = urllib.request.urlopen(url).read().decode('utf-8')
 text_array = list(filter(lambda a: a != '', text.split('\n')))
 
-torn = text_array.index('... TORNADO ...')
-hail = text_array.index('... HAIL ...')
-wind = text_array.index('... WIND ...')
-cate = text_array.index('... CATEGORICAL ...')
-end = text_array[cate:].index("&&")
+if day == 1:
+    torn = text_array.index('... TORNADO ...')
+    hail = text_array.index('... HAIL ...')
+    wind = text_array.index('... WIND ...')
+    cate = text_array.index('... CATEGORICAL ...')
+    end = text_array[cate:].index("&&")
 
-coords = {  "tornado":        text_array[torn+1:hail-1],
-            "hail":            text_array[hail+1:wind-1],
-            "wind":            text_array[wind+1:cate-2],
-            "categorical":    text_array[cate+1:cate+end]}
+    coords = { "tornado":        text_array[torn+1:hail-1],
+               "hail":           text_array[hail+1:wind-1],
+               "wind":           text_array[wind+1:cate-2],
+               "categorical":    text_array[cate+1:cate+end]}
 
-probs = {    "tornado":        ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-             "hail":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-             "wind":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-             "categorical":     ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
+    probs = {  "tornado":         ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+               "hail":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+               "wind":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+               "categorical":     ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
 
+
+elif day == 2 or day == 3:
+    severe = text_array.index('... ANY SEVERE ...')
+    cate = text_array.index('... CATEGORICAL ...')
+    end = text_array[cate:].index("&&")
+
+    coords = {  "severe":        text_array[severe+1:cate-2],
+                "categorical":   text_array[cate+1:cate+end]}
+
+    probs =  {  "severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+                "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
+
+elif day == 48:
+	severe = text_array.index('... ANY SEVERE ...')
+	end = text_array[severe:].index("&&")
+
+	coords = { "severe": text_array[severe+1:severe+end]}
+	probs =  { "severe": ['D4', 'D5', 'D6', 'D7', 'D8']}
+
+print(coords)
 
 def remove_cont(coords_list, substr='99999999 '):
     new_list = []
