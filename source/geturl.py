@@ -72,5 +72,3 @@ def geturl(outlook):
 		urlstring = "https://www.spc.noaa.gov/products/exper/day4-8/archive/{1}/KWNSPTSD{0}_{1}{2}{3}.txt".format(outlook, year, month, day)
 
 	return outlook, urlstring
-
-print(geturl(48))

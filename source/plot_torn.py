@@ -23,6 +23,7 @@ def main():
 				plt.plot(line.xy[1], line.xy[0], color=color)
 		plt.legend(custom_lines, list, loc=4)
 
-main()
-bordercoords.main()
-plt.show()
+if __name__=='__main__':
+	main()
+	bordercoords.main()
+	plt.show()
