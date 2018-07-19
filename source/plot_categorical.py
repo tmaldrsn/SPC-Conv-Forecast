@@ -7,39 +7,30 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-
-def event_coords(prob):
-	try:
-		categorical = new.get_coordinates(days=1, event='categorical', probability=prob)
-		return categorical
-	except ValueError:
-		return False
-
 def main(day=1):
-	list = ['TSTM', 'MRGL', 'SLGT', 'ENH ', 'MOD ', 'HIGH']
-	colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
-#	list = ['TSTM', 'SLGT', 'MDT ', 'HIGH']
-#	colors = ['lime', 'yellow', 'red', 'purple']
-	custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
-	for prob, color in zip(list, colors):
-		try:
-			categorical = new.get_coordinates(day, event='categorical', probability=prob)
-#			return categorical
-		except ValueError:
-			continue
-			
-#		if event_coords(prob):
-		if categorical:
-			for shape in categorical:
-#			for shape in event_coords(prob):
-				line = LineString(shape)
-				plt.plot(line.xy[1], line.xy[0], color=color)
-		plt.legend(custom_lines, list, loc=4)
+    list = ['TSTM', 'MRGL', 'SLGT', 'ENH ', 'MOD ', 'HIGH']
+    colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
+    custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
+    for prob, color in zip(list, colors):
+        try:
+            categorical = new.get_coordinates(day, event='categorical', probability=prob)
+        except ValueError:
+            continue
 
-	bordercoords.main()
-	plt.show()
+        if categorical:
+            for shape in categorical:
+                line = LineString(shape)
+                plt.plot(line.xy[1], line.xy[0], color=color)
+
+    plt.title("Categorical Outlook: DAY " + str(day))
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude")
+    plt.legend(custom_lines, list, loc=4)
+
+    bordercoords.main()
+    plt.show()
 
 if __name__=='__main__':
-	bordercoords.main()
-	main()
-	plt.show()
+    bordercoords.main()
+    main()
+    plt.show()
