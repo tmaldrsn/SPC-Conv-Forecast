@@ -20,3 +20,20 @@ def get_coords(outlook, year, month, day, time):
 	urlstring = "https://www.spc.noaa.gov/products/outlook/archive/{1}/KWNSPTSDY{0}_{1}{2}{3}{4}.txt".format(outlook, year, month, day, time)
 
 	return urlstring
+
+if __name__=='__main__':
+	import sys
+	if len(sys.argv) == 6:
+		outlook = int(sys.argv[1])
+		year = int(sys.argv[2])
+		month = int(sys.argv[3])
+		day = int(sys.argv[4])
+		time = int(sys.argv[5])
+
+		try:
+			get_coords(outlook, year, month, day, time)
+
+		except:
+			raise TypeError
+	else:
+		raise TypeError

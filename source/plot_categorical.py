@@ -7,13 +7,13 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-def main(day=1):
-    list = ['TSTM', 'MRGL', 'SLGT', 'ENH ', 'MOD ', 'HIGH']
+def main(day=1, url=None):
+    list = ['TSTM', 'MRGL', 'SLGT', 'ENH', 'MDT', 'HIGH']
     colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
     for prob, color in zip(list, colors):
         try:
-            categorical = new.get_coordinates(day, event='categorical', probability=prob)
+            categorical = new.get_coordinates(day, event='categorical', probability=prob, url=url)
         except ValueError:
             continue
 
@@ -31,6 +31,18 @@ def main(day=1):
     plt.show()
 
 if __name__=='__main__':
+    import sys
+
+    print(sys.argv)
+
     bordercoords.main()
-    main()
+    if len(sys.argv) == 3 and ("https://www.spc.noaa.gov/products/outlook/archive/" in sys.argv[2]) and (int(sys.argv[1]) in [1, 2, 3, 48]):
+        day = int(sys.argv[1])
+        url = sys.argv[2]
+        main(day, url)
+    elif len(sys.argv) == 2 and (sys.argv[1] in [1, 2, 3, 48]):
+        day = int(sys.argv[1])
+        main(day)
+    else:
+        main()
     plt.show()
