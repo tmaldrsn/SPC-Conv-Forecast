@@ -2,10 +2,12 @@ import bordercoords
 import get_coords as new
 import conversion
 from shapely.geometry import LineString
-import matplotlib
-matplotlib.use("TkAgg")
+#import matplotlib
+#if matplotlib.get_backend() != "TkAgg":
+#    matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+
 
 def main(day=1, url=None):
     list = ['TSTM', 'MRGL', 'SLGT', 'ENH', 'MDT', 'HIGH']
@@ -32,8 +34,6 @@ def main(day=1, url=None):
 
 if __name__=='__main__':
     import sys
-
-    print(sys.argv)
 
     bordercoords.main()
     if len(sys.argv) == 3 and ("https://www.spc.noaa.gov/products/outlook/archive/" in sys.argv[2]) and (int(sys.argv[1]) in [1, 2, 3, 48]):

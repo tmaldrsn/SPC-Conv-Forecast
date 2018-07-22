@@ -2,8 +2,8 @@ import bordercoords
 import get_coords as new
 import conversion
 from shapely.geometry import LineString
-import matplotlib
-matplotlib.use("TkAgg")
+#import matplotlib
+#matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
