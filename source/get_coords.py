@@ -40,7 +40,7 @@ def get_info(days=1, url=None):
         probs = {"tornado":         ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", "0.60", "SIGN"],
                  "hail":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
                  "wind":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "categorical":     ["TSTM", "MRGL", "SLGT", "ENH", "MDT", "HIGH"]}
+                 "categorical":     ["TSTM", "MRGL", "SLGT", "ENH", "MOD", "HIGH"]}
         logging.info('Day 1 outlook coordinates stored.')
 
     elif day == 2 or day == 3:
@@ -52,7 +52,7 @@ def get_info(days=1, url=None):
                   "categorical":   text_array[cate+1:cate+end]}
 
         probs = {"severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MDT ", "HIGH"]}
+                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
 
         logging.info('Day {} outlook coordinates stored.'.format(day))
 

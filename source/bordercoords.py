@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    print(os.getcwd())
-    kml_file = './source/data/gz_2010_us_outline_20m.kml'
+    try:
+        kml_file = './source/data/gz_2010_us_outline_20m.kml'
+    except FileNotFoundError:
+        kml_file = '../data/gz_2010gz_2010_us_outline_20m.kml'
 
+    print(os.getcwd())
+    print(kml_file)
     f = open(kml_file, 'r')
     s = BeautifulSoup(f, 'xml')
     finalstring = s.find_all('coordinates')
@@ -41,3 +45,6 @@ def main():
             plt.plot(polygons[i].xy[1], polygons[i].xy[0], color='b')
         except AttributeError:
             pass
+
+if __name__=='__main__':
+    main()

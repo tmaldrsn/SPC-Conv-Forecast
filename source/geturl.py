@@ -48,8 +48,7 @@ def geturl(outlook):
         if day < 10:
             day = "0"+str(day)
 
-        urlstring = "https://www.spc.noaa.gov/products/outlook/archive/{1}/KWNSPTSDY{0}_{1}{2}{3}{4}.txt" \
-            .format(outlook, year, month, day, hour)
+        urlstring = "https://www.spc.noaa.gov/products/outlook/archive/{1}/KWNSPTSDY{0}_{1}{2}{3}{4}.txt".format(outlook, year, month, day, hour)
 
     elif outlook == 3:
         hour = str("0730")

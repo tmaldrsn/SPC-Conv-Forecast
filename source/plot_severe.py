@@ -2,10 +2,11 @@ import bordercoords
 import get_coords as new
 import conversion
 from shapely.geometry import LineString
-import matplotlib
-matplotlib.use("TkAgg")
+#import matplotlib
+#matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+
 
 def main(day=2):
     list = ['0.05', '0.15', '0.30', '0.45', '0.60', 'SIGN']
@@ -30,6 +31,7 @@ def main(day=2):
 
     bordercoords.main()
     plt.show()
+
 
 if __name__=='__main__':
     bordercoords.main()

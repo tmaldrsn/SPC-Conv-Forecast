@@ -10,7 +10,7 @@ from matplotlib.lines import Line2D
 
 
 def main(day=1, url=None):
-    list = ['TSTM', 'MRGL', 'SLGT', 'ENH', 'MDT', 'HIGH']
+    list = ['TSTM', 'MRGL', 'SLGT', 'ENH', 'MOD', 'HIGH']
     colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
     for prob, color in zip(list, colors):
@@ -31,6 +31,7 @@ def main(day=1, url=None):
 
     bordercoords.main()
     plt.show()
+
 
 if __name__=='__main__':
     import sys

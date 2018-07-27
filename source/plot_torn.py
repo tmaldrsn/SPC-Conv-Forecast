@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import LineString
 from matplotlib.lines import Line2D
 
+
 def main(day=1, url=None):
     list = ['0.02', '0.05', '0.10', '0.15', '0.30', '0.45', '0.60', 'SIGN']
     colors = ['green', 'brown', 'yellow', 'red', 'pink', 'purple', 'blue', 'black']
@@ -29,6 +30,7 @@ def main(day=1, url=None):
 
     bordercoords.main()
     plt.show()
+
 
 if __name__=='__main__':
     import sys
