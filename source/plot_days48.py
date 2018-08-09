@@ -9,6 +9,9 @@ from matplotlib.lines import Line2D
 
 
 def main(day=48):
+    """
+    Plots the Days 4-8 outlook.
+    """
     list = ['D4', 'D5', 'D6', 'D7', 'D8']
     colors = ['red', 'purple', 'green', 'blue', 'brown']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]

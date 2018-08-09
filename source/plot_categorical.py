@@ -10,6 +10,10 @@ from matplotlib.lines import Line2D
 
 
 def main(day=1, url=None):
+    """
+    Plots categorical probability shapes for days 1, 2 & 3 outlooks
+    """
+#    categorical = new.get_coordinates(day, event='categorical')
     list = ['TSTM', 'MRGL', 'SLGT', 'ENH', 'MOD', 'HIGH']
     colors = ['lime', 'green', 'yellow', 'orange', 'red', 'purple']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]

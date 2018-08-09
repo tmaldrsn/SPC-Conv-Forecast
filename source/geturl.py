@@ -2,7 +2,13 @@ import time
 
 
 def geturl(outlook):
-
+    """
+    Retrieves the URL for the most recent outlook based on input:
+        1 ==> Day 1
+        2 ==> Day 2
+        3 ==> Day 3
+        48 ==> Days 4-8
+    """
     current_time = time.gmtime(time.time())
     year = current_time.tm_year
     month = current_time.tm_mon

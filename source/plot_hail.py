@@ -9,6 +9,10 @@ from matplotlib.lines import Line2D
 
 
 def main(day=1):
+    """
+    Plots the hail probabilities for the Day 1 outlook.
+    """
+    
     list = ['0.05', '0.15', '0.30', '0.45', '0.60', 'SIGN']
     colors = ['brown', 'yellow', 'red', 'pink', 'purple', 'black']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]

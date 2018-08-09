@@ -11,6 +11,11 @@ logging.basicConfig(filename='errlog.log', level=logging.DEBUG, format=format)
 
 
 def get_info(days=1, url=None):
+    """
+    Retrieves and formats data from the current SPC forecast online.
+    Also able to get information from any archived forecast URL.
+    """
+
     if url is None:
         logging.info("No URL provided, extracting most recent available forecast.")
         day = geturl.geturl(days)[0]
@@ -69,6 +74,10 @@ def get_info(days=1, url=None):
 
 
 def remove_cont(coords_list, substr='99999999'):
+    """
+    Removes '99999999' ==> 'continue' coordinates in the forecast shapes where
+    the outlook shapes reach the border and continue elsewhere on the border.
+    """
     new_list = []
     for coord in coords_list:
         index = 0
@@ -81,10 +90,16 @@ def remove_cont(coords_list, substr='99999999'):
     return new_list
 
 
-def get_coordinates(days, event, probability, url=None):
-    coords, probs = get_info(days, url)
+def get_coordinates(info, days, event, probability, url=None):
+    """
+    Formats coordinates in form of nested arrays.
+    """
+    
+    coords, probs = info
+    logging.info("Information from retrieval script unpacked.")
 
     un_coords = remove_cont(coords[event])
+    logging.info("CONTINUE coordinates removed from forecast.")
 
     d = []
     for string in un_coords:

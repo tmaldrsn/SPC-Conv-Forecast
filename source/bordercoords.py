@@ -4,6 +4,21 @@ from shapely.geometry.polygon import Polygon, LinearRing
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
 
+import logging
+
+format = '%(asctime)-15s %(filename)s %(funcName)s %(message)s'
+logging.basicConfig(filename='errlog.log', level=logging.DEBUG, format=format)
+
+def in_boundaries(lat, lon):
+    """
+    Determines whether or not a given (latitude, longitude) coordinate pair
+    is within the contiguous 48 states for plotting purposes
+    """
+    east_boundary = float(lon) < -125
+    west_boundary = float(lon) > 10
+    south_boundary = float(lat) < 20
+    return east_boundary or west_boundary or south_boundary
+
 
 def main():
     try:
@@ -11,40 +26,32 @@ def main():
     except FileNotFoundError:
         kml_file = '../data/gz_2010gz_2010_us_outline_20m.kml'
 
-    print(os.getcwd())
-    print(kml_file)
-    f = open(kml_file, 'r')
-    s = BeautifulSoup(f, 'xml')
-    finalstring = s.find_all('coordinates')
+    logging.info("US KML file loaded.")
 
-    polygons = []
+    with open(kml_file, 'r') as f:
+        s = BeautifulSoup(f, 'lxml')
+        finalstring = s.find_all('coordinates')
 
-    start = 0
-    fin = len(finalstring)
-
-    for string in finalstring[start:fin]:
+    for string in finalstring:
         polygon = []
         for coord in string:
             coord = str(coord).split(" ")
-            east_boundary = float(coord[0].split(",")[0]) < -125
-            west_boundary = float(coord[0].split(",")[0]) > 10
-            south_boundary = float(coord[0].split(",")[1]) < 20
-            if east_boundary or west_boundary or south_boundary:
+            lat = coord[0].split(",")[1]
+            lon = coord[0].split(",")[0]
+            if in_boundaries(lat, lon):
                 continue
             for trip in coord:
                 lon, lat, _ = trip.split(",")
                 coordinate = (float(lat), float(lon))
                 polygon.append(coordinate)
         try:
-            polygons.append(LineString(polygon))
-        except ValueError:
-            pass
-
-    for i in range(fin-start):
-        try:
-            plt.plot(polygons[i].xy[1], polygons[i].xy[0], color='b')
+            polygon = LineString(polygon)
+            plt.plot(polygon.xy[1], polygon.xy[0], color='b')
         except AttributeError:
             pass
+
+    logging.info("US shape plotted.")
+
 
 if __name__=='__main__':
     main()

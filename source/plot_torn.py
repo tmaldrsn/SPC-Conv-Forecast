@@ -9,6 +9,9 @@ from matplotlib.lines import Line2D
 
 
 def main(day=1, url=None):
+    """
+    Plots the tornado probabilites for the Day 1 outlook.
+    """
     list = ['0.02', '0.05', '0.10', '0.15', '0.30', '0.45', '0.60', 'SIGN']
     colors = ['green', 'brown', 'yellow', 'red', 'pink', 'purple', 'blue', 'black']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
