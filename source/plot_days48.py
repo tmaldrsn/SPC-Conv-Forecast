@@ -8,28 +8,28 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def main(day=1):
+def main(day=48):
     """
-    Plots the hail probabilities for the Day 1 outlook.
+    Plots the Days 4-8 outlook.
     """
-    
-    list = ['0.05', '0.15', '0.30', '0.45', '0.60', 'SIGN']
-    colors = ['brown', 'yellow', 'red', 'pink', 'purple', 'black']
+    list = ['D4', 'D5', 'D6', 'D7', 'D8']
+    colors = ['red', 'purple', 'green', 'blue', 'brown']
     custom_lines = [Line2D([0], [0], color=color, lw=2) for color in colors]
     for prob, color in zip(list, colors):
         try:
-            hail = new.get_coordinates(day, event='hail', probability=prob)
+            severe = new.get_coordinates(day, event='severe', probability=prob)
         except ValueError:
             continue
 
-        if hail:
-            for shape in hail:
+        if severe:
+            for shape in severe:
                 line = LineString(shape)
                 plt.plot(line.xy[1], line.xy[0], color=color)
 
-    plt.title("Hail Probabilities")
+    plt.title("Categorical Outlook: DAYS 4-8")
     plt.xlabel("Longitude")
     plt.ylabel("Latitude")
+
     plt.legend(custom_lines, list, loc=4)
 
     bordercoords.main()
