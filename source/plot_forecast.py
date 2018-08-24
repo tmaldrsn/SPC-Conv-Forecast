@@ -6,7 +6,7 @@ import conversion
 
 # import third-party modules
 from shapely.geometry import LineString
-#import matplotlib
+import matplotlib
 #matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -47,6 +47,3 @@ def main(forecast_object, event):
 
     bordercoords.main()
     plt.show()
-
-forecast_object = get_forecast_object.main(days=48)
-main(forecast_object, 'severe')

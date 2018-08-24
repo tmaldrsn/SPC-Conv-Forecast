@@ -20,8 +20,6 @@ def main(days=1, url=None):
         logging.info("No URL provided, extracting most recent available forecast.")
         day = geturl.geturl(days)[0]
         url = geturl.geturl(days)[1]
-
-        print(day)
     else:
         logging.info("URL provided, attempting to extract archived forecast.")
         day = days
@@ -59,7 +57,7 @@ def main(days=1, url=None):
                   "categorical":   text_array[cate+1:cate+end]}
 
         probs = {"severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MOD ", "HIGH"]}
+                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MDT ", "HIGH"]}
 
         logging.info('Day {} outlook coordinates stored.'.format(day))
 

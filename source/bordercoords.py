@@ -1,4 +1,4 @@
-import os
+import os, sys
 from bs4 import BeautifulSoup
 from shapely.geometry.polygon import Polygon, LinearRing
 from shapely.geometry import LineString
@@ -9,7 +9,7 @@ import logging
 format = '%(asctime)-15s %(filename)s %(funcName)s %(message)s'
 logging.basicConfig(filename='errlog.log', level=logging.DEBUG, format=format)
 
-def in_boundaries(lat, lon):
+def out_of_boundaries(lat, lon):
     """
     Determines whether or not a given (latitude, longitude) coordinate pair
     is within the contiguous 48 states for plotting purposes
@@ -24,7 +24,7 @@ def main():
     try:
         kml_file = './source/data/gz_2010_us_outline_20m.kml'
     except FileNotFoundError:
-        kml_file = '../data/gz_2010gz_2010_us_outline_20m.kml'
+        kml_file = './data/gz_2010gz_2010_us_outline_20m.kml'
 
     logging.info("US KML file loaded.")
 
@@ -38,7 +38,7 @@ def main():
             coord = str(coord).split(" ")
             lat = coord[0].split(",")[1]
             lon = coord[0].split(",")[0]
-            if in_boundaries(lat, lon):
+            if out_of_boundaries(lat, lon):
                 continue
             for trip in coord:
                 lon, lat, _ = trip.split(",")

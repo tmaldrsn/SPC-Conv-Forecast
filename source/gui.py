@@ -1,23 +1,9 @@
 import tkinter as tk
 import matplotlib
 matplotlib.use("TkAgg")
-import plot_categorical, plot_torn, plot_hail, plot_wind, plot_severe, plot_days48
-
-day1plots = {
-    'categorical': plot_categorical,
-    'tornado': plot_torn,
-    'hail': plot_hail,
-    'wind': plot_wind
-}
-
-day2plots = {
-    'categorical': plot_categorical,
-    'severe': plot_severe
-}
-
-day48plots = {
-    'severe': plot_days48
-}
+import get_forecast_object
+import plot_forecast
+import datetime
 
 
 class GUI(tk.Frame):
@@ -25,6 +11,12 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.forecast = tk.IntVar()
         self.event = tk.StringVar()
+        self.year = tk.IntVar()
+        self.month = tk.IntVar()
+        self.day = tk.IntVar()
+        self.year.set(datetime.date.today().year)
+        self.month.set(datetime.date.today().month)
+        self.day.set(datetime.date.today().day)
         self.grid()
         self.createForecastWidget()
         self.createForecastTypeWidget()
@@ -32,12 +24,20 @@ class GUI(tk.Frame):
         self.createLabels()
 
     def createLabels(self):
+        self.dateLabel = tk.Label(self, text='Date: ')
         self.dayLabel = tk.Label(self, text='Day: ')
         self.forecastLabel = tk.Label(self, text='Event: ')
+        self.dateLabel.grid(row=0, column=0)
         self.dayLabel.grid(row=1, column=0)
         self.forecastLabel.grid(row=2, column=0)
 
     def createWidgets(self):
+        self.yearMenu = tk.OptionMenu(self, self.year, *list(range(2003, 2019)))
+        self.yearMenu.grid(row=0, column=1, columnspan=2)
+        self.monthMenu = tk.OptionMenu(self, self.month, *list(range(1, 13)))
+        self.monthMenu.grid(row=0, column=3)
+        self.dayMenu = tk.OptionMenu(self, self.day, *list(range(1, 32)))
+        self.dayMenu.grid(row=0, column=4)
         self.quitButton = tk.Button(self, text='Quit', command=self.quit)
         self.submitButton = tk.Button(self, text='Submit', command=self.plot)
         self.submitButton.grid(columnspan=6)
@@ -67,19 +67,6 @@ class GUI(tk.Frame):
         self.windButton.grid(row=2, column=4)
         self.severeButton.grid(row=2, column=5)
 
-    def plot(self):
-        forecast = self.forecast.get()
-        event = self.event.get()
-
-        if forecast == 1:
-            if event in day1plots.keys():
-                day1plots[event].main(forecast)
-        elif forecast == 2 or forecast == 3:
-            if event in day2plots.keys():
-                day2plots[event].main(forecast)
-        else:
-            day48plots[event].main(forecast)
-
     def day1button(self):
         self.categoricalButton.configure(state=tk.NORMAL)
         self.tornButton.configure(state=tk.NORMAL)
@@ -103,6 +90,12 @@ class GUI(tk.Frame):
         self.hailButton.configure(state=tk.DISABLED)
         self.severeButton.configure(state=tk.NORMAL)
         self.severeButton.select()
+
+    def plot(self):
+        forecast = self.forecast.get()
+        event = self.event.get()
+        forecast_object = get_forecast_object.main(forecast)
+        plot_forecast.main(forecast_object, event)
 
 
 app = GUI()
