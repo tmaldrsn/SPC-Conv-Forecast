@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from shapely.geometry.polygon import Polygon, LinearRing
 from shapely.geometry import LineString
 import matplotlib.pyplot as plt
+import checkpolygon
 
 import logging
 

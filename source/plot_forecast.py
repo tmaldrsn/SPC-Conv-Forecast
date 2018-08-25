@@ -5,7 +5,7 @@ import format_coordinates
 import conversion
 
 # import third-party modules
-from shapely.geometry import LineString
+from shapely.geometry import LineString, Polygon
 import matplotlib
 #matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt

@@ -75,5 +75,7 @@ def main(info, event, probability, url=None):
             new_out += d[i][:]
         i += 1
 
+    print(out)
+
     out = [[conversion.convert(coord) for coord in coords] for coords in out]
     return out

@@ -1,11 +1,11 @@
 import time
 import datetime
 
-times = {1: ['0100', '0600', '1200', '1300', '1630', '2000'],
+times = {1: ['0100', '1200', '1300', '1630', '2000'],
          2: ['0600', '1730'],
          3: ['0730']}
 
-def geturl(outlook, date="current"):
+def geturl(outlook):
     """
     Retrieves the URL for the most recent outlook based on input:
         1 ==> Day 1
@@ -27,8 +27,6 @@ def geturl(outlook, date="current"):
             hour = str("2000")
         elif 1 <= hour < 6:
             hour = str("0100")
-        elif 6 <= hour < 12:
-            hour = str("0600")
         elif 6 <= hour < 13:
             hour = str("1200")
         elif 13 <= hour or (hour < 16 and minute < 30):
@@ -86,11 +84,11 @@ def geturl(outlook, date="current"):
 
 def lookup_url(date, outlook, outlook_time):
     """
-    Retrieves archived URL based on datetime object as input.
+    Retrieves archived URL based on datetime.date object as input.
     """
     year = date.year
-    month = date.month
-    day = date.day
+    month = date.strftime('%m')
+    day = date.strftime('%d')
 
     if outlook == 48:
         urlstring = "https://www.spc.noaa.gov/products/exper/day4-8/archive/{1}/KWNSPTSD{0}_{1}{2}{3}.txt".format(outlook, year, month, day)
