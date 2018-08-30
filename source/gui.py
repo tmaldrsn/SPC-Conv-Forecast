@@ -6,6 +6,11 @@ import get_forecast_object
 import plot_forecast
 import datetime
 
+import logging
+
+format = '%(asctime)-15s %(filename)s %(funcName)s %(message)s'
+logging.basicConfig(filename='guilog.log', level=logging.DEBUG, format=format)
+
 
 class GUI(tk.Frame):
     def __init__(self, master=None):
@@ -44,7 +49,7 @@ class GUI(tk.Frame):
 
 
     def createWidgets(self):
-        self.yearMenu = tk.OptionMenu(self, self.year, *list(range(2003, 2019)))
+        self.yearMenu = tk.OptionMenu(self, self.year, *list(range(2015, 2019)))
         self.monthMenu = tk.OptionMenu(self, self.month, *list(range(1, 13)))
         self.dayMenu = tk.OptionMenu(self, self.day, *list(range(1, 32)))
 
@@ -175,13 +180,10 @@ class GUI(tk.Frame):
         self.day3outlook1.select()
         self.day3outlook1.deselect()
 
-    def get_url(self):
-        date = datetime.date(self.year.get(), self.month.get(), self.day.get())
-        return geturl.lookup_url(date, self.forecast.get(), self.time.get())
-
 
     def plot(self):
-        url = self.get_url()
+        date = datetime.date(self.year.get(), self.month.get(), self.day.get())
+        url = geturl.lookup_url(date, self.forecast.get(), self.time.get())
         forecast = self.forecast.get()
         event = self.event.get()
         forecast_object = get_forecast_object.main(forecast, url)

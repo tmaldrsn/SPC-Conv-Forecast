@@ -1,4 +1,3 @@
-
 # todo list ** not necessarily in order of priority
 # 1. logging for gui.py
 # 2. clean up format_coordinates.py code
@@ -9,3 +8,14 @@
 # 7. clean up GUI, add functionality to check area probability
 # 8. somehow store queries in database
 # 9. more unittesting
+# 10. update plot script for outlooks before mrgl and enh risks
+# 11. setup.py
+
+__all__ = [
+    'bordercoords',
+    'checkpolygon',
+    'conversion',
+    'format_coordinates',
+    'get_forecast_object',
+    'geturl'
+]

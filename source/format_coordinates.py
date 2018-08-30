@@ -10,6 +10,10 @@ format = '%(asctime)-15s %(filename)s %(funcName)s %(message)s'
 logging.basicConfig(filename='errlog.log', level=logging.DEBUG, format=format)
 
 
+def create_shapes(coords_list):
+    pass
+
+
 def remove_cont(coords_list, substr='99999999'):
     """
     Removes '99999999' ==> 'continue' coordinates in the forecast shapes where
@@ -74,8 +78,6 @@ def main(info, event, probability, url=None):
         else:
             new_out += d[i][:]
         i += 1
-
-    print(out)
 
     out = [[conversion.convert(coord) for coord in coords] for coords in out]
     return out

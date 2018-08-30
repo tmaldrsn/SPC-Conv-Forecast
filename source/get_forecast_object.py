@@ -37,15 +37,20 @@ def main(days=1, url=None):
         cate = text_array.index('... CATEGORICAL ...')
         end = text_array[cate:].index("&&")
 
-        coords = {"tornado":        text_array[torn+1:hail-1],
-                  "hail":           text_array[hail+1:wind-1],
-                  "wind":           text_array[wind+1:cate-2],
-                  "categorical":    text_array[cate+1:cate+end]}
+        coords = {
+            "tornado":        text_array[torn+1:hail-1],
+            "hail":           text_array[hail+1:wind-1],
+            "wind":           text_array[wind+1:cate-2],
+            "categorical":    text_array[cate+1:cate+end]
+        }
 
-        probs = {"tornado":         ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "hail":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "wind":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "categorical":     ["TSTM", "MRGL", "SLGT", "ENH", "MDT", "HIGH"]}
+        probs = {
+            "tornado":         ["0.02", "0.05", "0.10", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+            "hail":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+            "wind":            ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+            "categorical":     ["TSTM", "MRGL", "SLGT", "ENH", "MDT", "HIGH"]
+        }
+
         logging.info('Day 1 outlook coordinates stored.')
 
     elif day == 2 or day == 3:
@@ -53,11 +58,15 @@ def main(days=1, url=None):
         cate = text_array.index('... CATEGORICAL ...')
         end = text_array[cate:].index("&&")
 
-        coords = {"severe":        text_array[severe+1:cate-2],
-                  "categorical":   text_array[cate+1:cate+end]}
+        coords = {
+            "severe":        text_array[severe+1:cate-2],
+            "categorical":   text_array[cate+1:cate+end]
+        }
 
-        probs = {"severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
-                 "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MDT ", "HIGH"]}
+        probs = {
+            "severe":        ["0.05", "0.15", "0.30", "0.45", "0.60", "SIGN"],
+            "categorical":   ["TSTM", "MRGL", "SLGT", "ENH ", "MDT ", "HIGH"]
+        }
 
         logging.info('Day {} outlook coordinates stored.'.format(day))
 
@@ -65,8 +74,13 @@ def main(days=1, url=None):
         severe = text_array.index('... ANY SEVERE ...')
         end = text_array[severe:].index("&&")
 
-        coords = {"severe": text_array[severe+1:severe+end]}
-        probs = {"severe": ['D4', 'D5', 'D6', 'D7', 'D8']}
+        coords = {
+            "severe": text_array[severe+1:severe+end]
+        }
+
+        probs = {
+            "severe": ['D4', 'D5', 'D6', 'D7', 'D8']
+        }
 
         logging.info('Days 4-8 outlook coordinates stored.')
 

@@ -3,8 +3,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 from shapely.geometry.polygon import LinearRing
 from shapely.geometry import LineString
-import bordercoords
-import get_forecast_object
 
 def get_coarse_us_coords_list():
     return [
